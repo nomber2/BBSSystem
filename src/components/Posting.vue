@@ -1,50 +1,45 @@
 <template>
-    <List item-layout="vertical">
-        <ListItem v-for="item in data" :key="item.title">
-            <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.description" />
-            {{ item.content }}
-            <template slot="action">
-                <li>
-                    <Icon type="ios-star-outline" /> 123
-                </li>
-                <li>
-                    <Icon type="ios-thumbs-up-outline" /> 234
-                </li>
-                <li>
-                    <Icon type="ios-chatbubbles-outline" /> 345
-                </li>
-            </template>
-            <template slot="extra">
-                <img src="https://dev-file.iviewui.com/5wxHCQMUyrauMCGSVEYVxHR5JmvS7DpH/large" style="width: 280px">
-            </template>
-        </ListItem>
-    </List>
+  <div class="bottom">
+    <div class="fatie">
+      <h1 class="biaoti">发帖</h1>
+    </div>
+    <div class="editor">
+      <Editor></Editor>
+    </div>
+  </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                data: [
-                    {
-                        title: 'This is title 1',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
-                    },
-                    {
-                        title: 'This is title 2',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
-                    },
-                    {
-                        title: 'This is title 3',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
-                    }
-                ]
-            }
-        }
-    }
+import editor from "./editor/quill";
+
+export default {
+  name: "posting",
+  components: {
+    Editor: editor,
+  },
+  data() {
+    return {};
+  },
+};
 </script>
+<style>
+.bottom {
+  background-image: url(../../static/images/ftbg.jpg);
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+.fatie {
+  width: 100vw;
+  height: 20vh;
+  padding-top: 50px;
+}
+.biaoti {
+  font-size: 40px;
+  font-family: "微软雅黑";
+}
+.editor {
+  width: 80vw;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+</style>
