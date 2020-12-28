@@ -5,6 +5,7 @@ import login from '@/components/Login'
 import register from '@/components/Register'
 import news from '@/components/News'
 import posting from '@/components/Posting'
+import account from '@/components/Account'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/posting',
       name: 'posting',
       component: posting
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: account
     }
   ]
 })

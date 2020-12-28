@@ -33,7 +33,7 @@
                   ["link", "image", "video"] // 链接、图片、视频
                 ], //工具菜单栏配置
               },
-              placeholder: '请在这里添加产品描述', //提示
+              placeholder: '请在这里输入发帖内容（ps：请勿输入涉嫌违法等敏感词汇，后台将对帖子内容进行审核）', //提示
               readyOnly: false, //是否只读
               theme: 'snow', //主题 snow/bubble
               syntax: true, //语法检测
