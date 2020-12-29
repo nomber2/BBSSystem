@@ -16,7 +16,7 @@
             </Input>
         </FormItem>
         <FormItem prop="password1">
-            <Input type="password" v-model="formInline.password" placeholder="请确认密码">
+            <Input type="password" v-model="formInline.repassword" placeholder="请确认密码">
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
             </Input>
         </FormItem>
@@ -35,7 +35,8 @@
             return {
                 formInline: {
                     user: '',
-                    password: ''
+                    password: '',
+                    repassword: ''
                 },
                 ruleInline: {
                     user: [
@@ -50,19 +51,31 @@
         },
         methods: {
             handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
-                    // if (valid) {
-                    //     this.$Message.success('Success!');
-                    // } else {
-                    //     this.$Message.error('Fail!');
-                    // }
-                    this.$router.push({path: "/"})
+                let that = this;
+                that.$refs[name].validate((valid) => {
+                    if (valid) {
+                        that.$axios.post('http://121.196.43.56/bbs-api/user/add', {
+                            'account': '13951012712',
+                            'userName': that.formInline.user,
+                            'avatar': 'test',
+                            'password': that.formInline.password
+                        })
+                        .then(function (response) {
+                            console.log(response);
+                            that.$Message.success('注册成功!');
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else {
+                        this.$Message.error('注册失败!');
+                    }
                 })
             }
         }
     }
 </script>
- <style>
+ <style scoped>
  .bg {
    width: 100vw;
    height: 100vh;

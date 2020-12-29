@@ -65,7 +65,21 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ])
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true,
+    noInfo: true,
+    overlay: true,
+    host: "localhost",//端口号
+    port: 8080,
+    proxy: {
+      '/api/*': {
+        target: 'http://121.196.43.56/bbs-api/',//跨域要访问的地址及端口
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 })
 
 module.exports = new Promise((resolve, reject) => {

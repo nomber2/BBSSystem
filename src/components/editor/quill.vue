@@ -40,6 +40,7 @@
             }
           }
         },
+        props: ['post'],
         methods: {
           // 失去焦点
           onEditorBlur(editor) {},
@@ -50,7 +51,7 @@
           // 值发生变化
           onEditorChange(editor) {
             this.content = editor.html;
-            console.log(editor);
+            this.$emit('transferContent', this.content);
           },
         },
         computed: {

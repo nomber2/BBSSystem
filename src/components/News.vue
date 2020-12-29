@@ -5,12 +5,12 @@
                 <div slot="top" class="demo-split-pane">
                     <div>
                         <p style="font-size: 22px">{{news.title}}</p>
-                        <p>{{news.content}}</p>
+                        <div style="margin-top: 30px" v-html="news.content"></div>
                     </div>
                 </div>
                 <div slot="bottom" class="demo-split-pane">
                     <Card :bordered="false">
-                        <p slot="title" class="title">评论区</p>
+                        <p slot="title" style="font-style: italic; font-size: 1.5em; text-align: left;">评论区</p>
                         <List>
                             <ListItem>
                                 <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" description="This is description, this is description." />
@@ -26,10 +26,8 @@
     </div>
 </template>
 <script>
-import HelloWorld from './HelloWorld.vue';
 
 export default {
-  components: { HelloWorld },
     name: 'News',
     data () {
         return {
@@ -42,7 +40,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .demo-split-pane{
     padding: 20px;
 }

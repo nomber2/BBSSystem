@@ -5,30 +5,38 @@
       <h2 class="brief">Shine in the world you love  站在自己所热爱的世界里，闪闪发光</h2>
     </div>
       <div class="top">
-        <Avatar icon="ios-person" size="large" @click.native="toPersonal()" />
-        <Button type="info" ghost size="middle" @click="register()">注册</Button>
-        <Button type="primary" ghost size="middle" @click="login()">登录</Button>
-        <Button type="primary" @click="toPosting()">发帖</Button>
+        <Avatar v-if="isLogin" style="margin-right: 20px; color: #f56a00;background-color: #fde3cf" @click.native="toPersonal()" >T</Avatar>
+        <Button type="info" ghost size="small" @click="register()">注册</Button>
+        <Button type="primary" ghost size="small" @click="login()">登录</Button>
       </div>
       <div class="content">
         <div>
           <Card :bordered="false">
-              <Button type="text">体育</Button>
-              <Button type="text">娱乐</Button>
-              <Button type="text">汽车</Button>
-              <Button type="text">科技</Button>
-              <Button type="text">休闲</Button>
-              <Button type="text">美妆</Button>
-              <Button type="text">综艺</Button>
-              <Button type="text">时事</Button>
-              <Button type="text">小说</Button>
-              <Button type="text">生活</Button>
+              <Button type="text" @click="changeToSport()">体育</Button>
+              <Button type="text" @click="changeToHappy()">娱乐</Button>
+              <Button type="text" @click="changeToCar()">汽车</Button>
+              <Button type="text" @click="changeToScience()">科技</Button>
+              <Button type="text" @click="changeToArder()">休闲</Button>
+              <Button type="text" @click="changeToBeauty()">美妆</Button>
+              <Button type="text" @click="changeToArt()">综艺</Button>
+              <Button type="text" @click="changeToThing()">时事</Button>
+              <Button type="text" @click="changeToBook()">小说</Button>
+              <Button type="text" @click="changeToLife()">生活</Button>
+              <div style="float: right;display : table-cell; vertical-align: middle;">
+                <Button type="text" size="small" @click="toPosting()">我要发帖</Button>
+              </div>
           </Card>
         </div>
         <Row :gutter="16" style="margin-top: 5px">
           <Col span="6">
             <Card :bordered="false" class="lrCard">
-              这里是新闻
+             <p slot="title">我的发帖</p>
+             <List border>
+                <ListItem v-for="(tiezi, index) in tieList" :key="index" @click.native="toInfo(tiezi)">
+                  {{tiezi.title}}
+                  <Button type="text" style="color: red">删除</Button>
+                </ListItem>
+            </List>
             </Card>
           </Col>
           <Col span="12">
@@ -52,7 +60,8 @@
           <Col span="6">
             <Card :bordered="false" class="lrCard">
               <p style="font-size: 18px;">{{nowTime}}</p>
-              <video src="../../static/video/test.mp4" height="170px" width="240px"></video> 
+              <p style="font-size: 18px;">今日宜运动</p>
+              <video src="../../static/video/test.mp4" controls="controls" height="180px" width="240px"></video> 
             </Card>
           </Col>
         </Row>
@@ -60,11 +69,11 @@
           <Col span="14">
             <Card class="yulenews">
                 <p slot="title">
-                  娱乐新闻
+                  {{newsName}}新闻
                 </p>
-                <Scroll :on-reach-edge="handleReachBottom">
+                <Scroll>
                 <List item-layout="vertical">
-                    <ListItem v-for="item in data" :key="item.title" @click.native="toInfo(item)">
+                    <ListItem v-for="item in data" :key="item.title">
                         <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.description" />
                         {{ item.content }}
                         <template slot="action">
@@ -88,13 +97,12 @@
           </Col>
           <Col span="10">
             <Card :bordered="false" class="lrCard">
-              这里是留言区
+              <p slot="title">今日话题</p>
+              <p>人到底要不要早点睡觉？</p>
                <List>
                 <ListItem>
-                    <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="This is title" description="This is description, this is description." />
-                </ListItem>
-                <ListItem>
-                    <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="This is title" description="This is description, this is description." />
+                  <span>userId</span>
+                  <ListItemMeta description="This is ：description, this is description." />
                 </ListItem>
                </List>
             </Card>
@@ -111,6 +119,9 @@ export default {
     return {
       value2: 0,
       nowTime: '',
+      newsName: '体育',
+      tieList: [],
+      isLogin: 0,
       data: [
                     {
                         title: 'This is title 1',
@@ -134,16 +145,49 @@ export default {
     }
   },
   methods: {
-    handleReachBottom () {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                const last = this.list1[this.list1.length - 1];
-                for (let i = 1; i < 11; i++) {
-                    this.list1.push(last + i);
-                }
-                resolve();
-            }, 2000);
-        });
+    changeToSport() {
+      this.newsName = '体育';
+      this.$axios.get('http://106.12.210.188:8005/crontab/index/newslist?type=1', {
+      })
+      .then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    },
+    changeToHappy() {
+      this.newsName = '娱乐';
+    },
+    changeToCar() {
+      this.newsName = '汽车';
+    },
+    changeToScience() {
+      this.newsName = '科技';
+    },
+    changeToArder() {
+      this.newsName = '休闲';
+    },
+    changeToBeauty() {
+      this.newsName = '美妆';
+    },
+    changeToArt() {
+      this.newsName = '综艺';
+    },
+    changeToThing() {
+      this.newsName = '时事';
+    },
+    changeToBook() {
+      this.newsName = '小说';
+    },
+    changeToLife() {
+      this.newsName = '生活';
+    },
+    toPersonal() {
+      this.$router.push({path: "/account"});
+    },
+    toPosting() {
+      this.$router.push({path: "/posting"});
     },
     login() {
       this.$router.push({path: "/login"});
@@ -167,6 +211,23 @@ export default {
     clear(){
       clearInterval(this.nowTimes);
       this.nowTimes = '';
+    },
+    getTie() {
+      let that = this;
+      that.$axios.get('http://121.196.43.56/bbs-api/post/list', {
+        params: {
+          userId: 1,
+          pageIndex: 1,
+          pageSize: 999
+        }
+      })
+      .then(function (response) {
+          console.log(response.data.data.list);
+          that.tieList = response.data.data.list;
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
     }
   },
   mounted() {
@@ -175,6 +236,15 @@ export default {
       this.nowTime = setInterval(() => {
         this.timeFormate(new Date()); //加载数据函数
       }, 1000);
+
+      let userId = localStorage.getItem('userId');
+      if (userId == null) {
+        this.isLogin = 0;
+      } else {
+        this.isLogin = 1;
+      }
+
+      this.getTie();
   },
   destroyed() {
     this.clear()
@@ -218,7 +288,7 @@ export default {
 }
 .lrCard {
   height: 300px;
-  background-color: #ebe9e9;
+  background-color: #f8f6f6;
 }
 .content {
   /* background-color: rgb(207, 241, 230); */

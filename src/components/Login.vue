@@ -35,6 +35,7 @@
                     user: '',
                     password: ''
                 },
+                userId: 0,
                 ruleInline: {
                     user: [
                         { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -48,19 +49,34 @@
         },
         methods: {
             handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
-                    // if (valid) {
-                    //     this.$Message.success('Success!');
-                    // } else {
-                    //     this.$Message.error('Fail!');
-                    // }
-                    this.$router.push({path: "/"})
+                let that = this;
+                that.$refs[name].validate((valid) => {
+                    if (valid) {
+                        that.$axios.post('http://121.196.43.56/bbs-api/user/login', {
+                            'account': '15195226888', //可选
+                            'password': that.formInline.password
+                        })
+                        .then(function (response) {
+                            console.log(response);
+                            console.log(response.data.data.userId);
+                            localStorage.setItem('userId', response.data.data.userId);
+                            that.$router.push({path: "/"});
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
+                        .then(function () {
+                            // always executed
+                        });
+                    } else {
+                        that.$Message.error('Fail!');
+                    }
                 })
-            }
+            },
         }
     }
 </script>
- <style>
+ <style scoped>
  .bg {
    width: 100vw;
    height: 100vh;

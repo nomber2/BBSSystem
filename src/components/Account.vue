@@ -11,10 +11,11 @@
         <h1>个人信息</h1>
         <div class="neirong">
           <Avatar icon="ios-person" size="large" />
-          <Upload action="//jsonplaceholder.typicode.com/posts/">
-            <Button icon="ios-cloud-upload-outline" style="margin-top: 20px"
-              >上传头像</Button
-            >
+          <Upload ref="uploadOss" action="//jsonplaceholder.typicode.com/posts/" :before-upload="handleOssBeforeUpload" :data="uploadData"
+                  :format="['jpg','jpeg','png','gif']" :max-size="2048" :on-exceeded-size="handleOssMaxSize"
+                  :on-format-error="handleOssFormatError" :on-success="handleOssSuccess"
+                  :show-upload-list="false">
+            <Button icon="ios-cloud-upload-outline">上传头像</Button>
           </Upload>
           <Form :model="formItem" :label-width="80">
             <FormItem
@@ -71,7 +72,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scope>
+<style>
 .backgDiv {
   background-image: url(../../static/images/bg1.jpg);
   overflow: hidden;

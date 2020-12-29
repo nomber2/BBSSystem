@@ -4,7 +4,11 @@
       <h1 class="biaoti">发帖</h1>
     </div>
     <div class="editor">
-      <Editor></Editor>
+      <Input v-model="title" placeholder="请输入帖子标题" style="width: 60vw; margin: 0 auto" />
+      <div style="float: right;">
+        <Button type="text" size="default" @click="post">发帖</Button>
+      </div>
+      <Editor v-bind:post="content" v-on:transferContent="changeContent"></Editor>
     </div>
   </div>
 </template>
@@ -17,20 +21,44 @@ export default {
     Editor: editor,
   },
   data() {
-    return {};
+    return {
+      title: '',
+      content: '',
+    };
   },
+  methods: {
+    post() {
+      let that = this;
+      that.$axios.post('http://121.196.43.56/bbs-api/post/add', {
+        userId: 1,
+        title: that.title,
+        content: that.content,
+        picture: 'test'
+      })
+      .then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    },
+    changeContent(post) {
+      this.content = post;
+      console.log(post);
+    }
+  }
 };
 </script>
-<style>
+<style scoped>
 .bottom {
   background-image: url(../../static/images/ftbg.jpg);
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw; */
+  height: 800px;
 }
 .fatie {
-  width: 100vw;
-  height: 20vh;
+  /* width: 100vw; */
+  height: 150px;
   padding-top: 50px;
 }
 .biaoti {
