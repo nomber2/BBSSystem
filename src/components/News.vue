@@ -69,7 +69,7 @@ export default {
             .then(function () {
                 // always executed
             });
-            },
+        },
         sendComment() {
             let that = this;
             that.$axios.post('http://121.196.43.56/bbs-api/comment/add', {

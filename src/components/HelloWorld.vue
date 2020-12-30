@@ -91,13 +91,13 @@
                         <div v-html="tiezi.content" @click="toInfo(tiezi)"></div>
                         <template slot="action">
                             <li>
-                                <Icon type="ios-star-outline" /> 123
+                                <Icon type="ios-star-outline" /> 2
                             </li>
                             <li>
-                                <Icon type="ios-thumbs-up-outline" /> 234
+                                <Icon type="ios-thumbs-up-outline" /> 4
                             </li>
                             <li>
-                                <Icon type="ios-chatbubbles-outline" /> 345
+                                <Icon type="ios-chatbubbles-outline" /> {{tiezi.commentNumber}}
                             </li>
                         </template>
                         <template slot="extra">
@@ -227,7 +227,7 @@ export default {
       let that = this;
       that.$axios.post('http://121.196.43.56/bbs-api/comment/add', {
           userId: that.userId,
-          relationId: 4,
+          relationId: that.discussShow.pkId,
           type: 1,
           content: that.discussReply
       })
@@ -253,6 +253,8 @@ export default {
       })
       .then(function (response) {
           that.$Message.success('新增成功!');
+          that.discuss.title = '';
+          that.discuss.content = '';
       })
       .catch(function (error) {
           console.log(error);
@@ -386,10 +388,12 @@ export default {
         }
       })
       .then(function (response) {
-          console.log('bighghu是是是'+response.data.data.list);
-          that.discussShow.title = response.data.data.list[0].pkId;
+          // console.log('bighghu是是是'+response.data.data.list);
+          that.discussShow.pkId = response.data.data.list[0].pkId;
           that.discussShow.title = response.data.data.list[0].title;
           that.discussShow.content = response.data.data.list[0].content;
+          console.log('哇啦啦', that.discussShow.pkId);
+          that.getComment();
       })
       .catch(function (error) {
           console.log(error);
@@ -403,7 +407,7 @@ export default {
           pageIndex: 1,
           pageSize: 999,
           relationId: that.discussShow.pkId,
-          type: 2
+          type: 1
         }
       })
       .then(function (response) {
@@ -432,7 +436,6 @@ export default {
       this.getInfo();
       this.getDiscuss();
       this.getTie();
-      this.getComment();
   },
   destroyed() {
     this.clear()
