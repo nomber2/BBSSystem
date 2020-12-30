@@ -21,9 +21,10 @@
                         </List>
                         <List>
                             <ListItem v-for="(item, index) in commentList" :key="index">
-                                <ListItemMeta :avatar="news.avatar" />
-                                <p>{{item.content}}</p>
-                                <Button @click="deleteComment(item.pkId)" type="text" style="color: red">删除</Button>
+                                <ListItemMeta v-if="item.userId == userId" :avatar="news.avatar" />
+                                <p v-else style="margin-right: 650px">{{item.userName}}:   </p>
+                                <p style="float: right">{{item.content}}</p>
+                                <Button v-if="item.userId == userId" @click="deleteComment(item.pkId)" type="text" style="color: red; float: right">删除</Button>
                             </ListItem>
                         </List>
                     </Card>
@@ -73,7 +74,7 @@ export default {
         sendComment() {
             let that = this;
             that.$axios.post('http://121.196.43.56/bbs-api/comment/add', {
-                userId: 1, //可选
+                userId: that.userId, //可选
                 relationId: that.news.pkId,
                 type: 0,
                 content: that.news.comment
@@ -93,7 +94,7 @@ export default {
             let that =this;
             that.$axios.get('http://121.196.43.56/bbs-api/comment/list', {
                 params: {
-                    userId: that.userId,
+                    // userId: that.userId,
                     pageIndex: 1,
                     pageSize: 999,
                     relationId: that.news.pkId,

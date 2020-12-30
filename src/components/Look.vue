@@ -26,30 +26,30 @@ export default {
         }
     },
     methods: {
-        sendComment() {
-            let that = this;
-            that.$axios.post('http://121.196.43.56/bbs-api/comment/add', {
-                userId: 1, //可选
-                relationId: that.news.pkId,
-                type: 2,
-                content: that.news.comment
-            })
-            .then(function (response) {
-                console.log(response);
-                // that.$router.push({path: "/"});
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
-        },
+        // sendComment() {
+        //     let that = this;
+        //     that.$axios.post('http://121.196.43.56/bbs-api/comment/add', {
+        //         userId: 1, //可选
+        //         relationId: that.news.pkId,
+        //         type: 2,
+        //         content: that.news.comment
+        //     })
+        //     .then(function (response) {
+        //         console.log(response);
+        //         // that.$router.push({path: "/"});
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     })
+        //     .then(function () {
+        //         // always executed
+        //     });
+        // },
         getComment() {
             let that = this;
             that.$axios.get('http://121.196.43.56/bbs-api/comment/list', {
                 params: {
-                userId: 1,
+                // userId: 1,
                 relationId: that.news.pkId,
                 pageIndex: 1,
                 pageSize: 999
@@ -65,7 +65,7 @@ export default {
         }
     },
     mounted() {
-        this.getComment();
+        // this.getComment();
     }
 }
 </script>

@@ -65,6 +65,7 @@ export default {
   data() {
     return {
       uploadData: {},
+      userId: 0,
       formItem: {
         avatar: "",
         input: "",
@@ -91,7 +92,7 @@ export default {
         this.$Message.error('两次密码不相同!');
       } else {
         that.$axios.post('http://121.196.43.56/bbs-api/user/update', {
-          pkId: 1,
+          pkId: that.userId,
           avatar: that.formItem.avatar,
           userName: that.formItem.input
         })
@@ -154,7 +155,8 @@ export default {
   },
   mounted() {
     this.formItem.avatar = this.$route.query.avatar;
-    this.formItem.input = this.$route.query.userName
+    this.formItem.input = this.$route.query.userName;
+    this.userId = localStorage.getItem('userId');
   }
 };
 </script>

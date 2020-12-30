@@ -116,9 +116,9 @@
                 <Scroll>
                   <List>
                     <ListItem v-for="(item, index) in commentList" :key="index">
-                      <span>{{item.userName}}:</span>
+                      <span>{{item.userId != userId ? item.userName : '我'}}:</span>
                       {{item.content}}
-                      <Button @click="deleteComment(item.pkId)" type="text" style="color: red; float: right">删除</Button>
+                      <Button @click="deleteComment(item.pkId)" v-if="item.userId == userId" type="text" style="color: red; float: right">删除</Button>
                     </ListItem>
                   </List>
                 </Scroll>
@@ -452,7 +452,7 @@ export default {
       let that =this;
       that.$axios.get('http://121.196.43.56/bbs-api/comment/list', {
         params: {
-          userId: that.userId,
+          // userId: that.userId,
           pageIndex: 1,
           pageSize: 999,
           relationId: that.discussShow.pkId,
