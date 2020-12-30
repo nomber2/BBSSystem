@@ -53,7 +53,7 @@
                 that.$refs[name].validate((valid) => {
                     if (valid) {
                         that.$axios.post('http://121.196.43.56/bbs-api/user/login', {
-                            'account': '15195226888', //可选
+                            'account': that.formInline.user, //可选
                             'password': that.formInline.password
                         })
                         .then(function (response) {
@@ -64,6 +64,7 @@
                         })
                         .catch(function (error) {
                             console.log(error);
+                            that.$Message.error('Fail!');
                         })
                         .then(function () {
                             // always executed

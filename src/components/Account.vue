@@ -10,10 +10,15 @@
       <div class="grxx">
         <h1>个人信息</h1>
         <div class="neirong">
-          <Avatar icon="ios-person" size="large" />
-          <Upload ref="uploadOss" action="//jsonplaceholder.typicode.com/posts/" :before-upload="handleOssBeforeUpload" :data="uploadData"
-                  :format="['jpg','jpeg','png','gif']" :max-size="2048" :on-exceeded-size="handleOssMaxSize"
-                  :on-format-error="handleOssFormatError" :on-success="handleOssSuccess"
+          <Avatar style="margin-bottom: 5px" shape="square" :src="formItem.avatar" size="large" />
+          <Upload ref="uploadOss" action="http://miaoruixiang.oss-cn-hangzhou.aliyuncs.com" 
+                  :before-upload="handleOssBeforeUpload"
+                  :data="uploadData"
+                  :format="['jpg','jpeg','png','gif']" 
+                  :max-size="2048" 
+                  :on-exceeded-size="handleOssMaxSize"
+                  :on-format-error="handleOssFormatError" 
+                  :on-success="handleOssSuccess"
                   :show-upload-list="false">
             <Button icon="ios-cloud-upload-outline">上传头像</Button>
           </Upload>
@@ -24,24 +29,26 @@
             >
               <Input
                 v-model="formItem.input"
-                placeholder="接口获取的用户名"
-              ></Input>
+                placeholder="请输入用户名"
+              />
             </FormItem>
             <FormItem label="新密码" style="margin-right: 30px">
               <Input
-                v-model="formItem.input"
+                v-model="formItem.password"
                 placeholder="请输入新密码"
-              ></Input>
+                type="password"
+              />
             </FormItem>
             <FormItem label="确认密码" style="margin-right: 30px">
               <Input
-                v-model="formItem.input"
+                v-model="formItem.repassword"
                 placeholder="请确认新密码"
-              ></Input>
+                type="password"
+              />
             </FormItem>
             <FormItem>
-              <Button type="primary">保存修改</Button>
-              <Button style="margin-left: 8px">取消</Button>
+              <Button type="primary" @click="saveEdit">保存修改</Button>
+              <Button style="margin-left: 8px"  @click="cancel">取消</Button>
             </FormItem>
           </Form>
         </div>
@@ -51,12 +58,17 @@
 </template>
 
 <script>
+import {oss} from '../libs/ossUtil'
+
 export default {
   name: "account",
   data() {
     return {
+      uploadData: {},
       formItem: {
+        avatar: "",
         input: "",
+        password: "",
         select: "",
         radio: "male",
         checkbox: [],
@@ -65,13 +77,88 @@ export default {
         time: "",
         slider: [20, 50],
         textarea: "",
+        repassword: ""
       },
     };
   },
+  methods: {
+    cancel() {
+      this.$router.push({path: "/"});
+    },
+    saveEdit() {
+      let that = this;
+      if (that.formItem.password != that.formItem.repassword) {
+        this.$Message.error('两次密码不相同!');
+      } else {
+        that.$axios.post('http://121.196.43.56/bbs-api/user/update', {
+          pkId: 1,
+          avatar: that.formItem.avatar,
+          userName: that.formItem.input
+        })
+        .then(function (response) {
+            console.log(response);
+            that.$router.push({path: "/"});
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    },
+    handleOssSuccess (res) { // 文件上传成功
+      if (res.status === 'ok') {
+        this.formItem.avatar = res.url;
+      }
+    },
+    handleOssFormatError (file) { // 文件格式错误
+      this.$Notice.warning({
+        title: '文件格式错误',
+        desc: '文件【 ' + file.name + ' 】格式不正确，请选择jpg，png或gif格式.'
+      })
+    },
+    handleOssMaxSize (file) { // 文件过大
+      this.$Notice.warning({
+        title: '文件大小超限',
+        desc: '文件【' + file.name + '】过大,最大支持2M.'
+      })
+    },
+    handleOssBeforeUpload (file) {
+       let vm = this
+      return oss(file.name, 0).then(res => {
+        vm.uploadHost = res.host
+        vm.fileName = res.key
+        vm.uploadData = res
+      })
+    }
+      // 获取oss上传token
+      // 0头像 1其他图片
+      // export const ossToken = (type) => {
+      //   let params = { type: 0 }
+      //   let that = this;
+      //   that.$axios.get('http://121.196.43.56/bbs-api/token/aliOssToken', {
+      //     params: params
+      //   })
+      //   .then(function (response) {
+      //       console.log(response);
+      //       // that.tieList = response.data.data.list;
+      //   })
+      //   .catch(function (error) {
+      //       console.log(error);
+      //   });
+      // }
+        // return that.$axios.get({
+        //   url: 'http://121.196.43.56/bbs-api/token/aliOssToken',
+        //   params: params
+        // })
+      // }
+    
+  },
+  mounted() {
+    this.formItem.avatar = this.$route.query.avatar;
+    this.formItem.input = this.$route.query.userName
+  }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .backgDiv {
   background-image: url(../../static/images/bg1.jpg);

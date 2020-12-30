@@ -6,6 +6,7 @@ import register from '@/components/Register'
 import news from '@/components/News'
 import posting from '@/components/Posting'
 import account from '@/components/Account'
+import look from '@/components/Look'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/account',
       name: 'account',
       component: account
+    },
+    {
+      path: '/look',
+      name: 'look',
+      component: look
     }
   ]
 })
