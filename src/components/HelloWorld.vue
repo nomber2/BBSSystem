@@ -253,6 +253,7 @@ export default {
       })
       .then(function (response) {
           that.$Message.success('新增成功!');
+          that.getDiscuss();
           that.discuss.title = '';
           that.discuss.content = '';
       })
