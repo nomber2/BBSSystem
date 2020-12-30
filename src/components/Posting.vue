@@ -42,14 +42,15 @@ export default {
       title: '',
       content: '',
       uploadData: {},
-      picture: ''
+      picture: '',
+      userId: 0
     };
   },
   methods: {
     post() {
       let that = this;
       that.$axios.post('http://121.196.43.56/bbs-api/post/add', {
-        userId: 1,
+        userId: that.userId,
         title: that.title,
         content: that.content,
         picture: that.picture
@@ -92,6 +93,9 @@ export default {
         vm.uploadData = res
       })
     }
+  },
+  mounted() {
+    this.userId = localStorage.getItem('userId');
   }
 };
 </script>

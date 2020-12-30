@@ -247,7 +247,7 @@ export default {
     saveDiscuss() {
       let that = this;
       that.$axios.post('http://121.196.43.56/bbs-api/discuss/add', {
-          userId: 1,
+          userId: that.userId,
           title: that.discuss.title,
           content: that.discuss.content
       })
@@ -397,7 +397,7 @@ export default {
       let that = this;
       that.$axios.get('http://121.196.43.56/bbs-api/post/list', {
         params: {
-          userId: that.userId,
+          // userId: that.userId,
           pageIndex: 1,
           pageSize: 999
         }
@@ -430,7 +430,7 @@ export default {
       let that =this;
       that.$axios.get('http://121.196.43.56/bbs-api/discuss/list', {
         params: {
-          userId: that.userId,
+          // userId: that.userId,
           pageIndex: 1,
           pageSize: 999,
           title: ''
