@@ -26,8 +26,8 @@
               <Button type="text" @click="changeToBeauty()">美妆</Button>
               <Button type="text" @click="changeToArt()">综艺</Button>
               <Button type="text" @click="changeToThing()">时事</Button>
-              <Button type="text" @click="changeToBook()">小说</Button>
-              <Button type="text" @click="changeToLife()">生活</Button>
+              <Button type="text" @click="changeToBook()">历史</Button>
+              <Button type="text" @click="changeToLife()">旅游</Button>
               <div style="float: right;display : table-cell; vertical-align: middle;">
                 <Button type="text" size="small" @click="toPosting()">我要发帖</Button>
                 <Button type="text" size="small" @click="showDicuss()">我要讨论</Button>
@@ -286,27 +286,75 @@ export default {
     },
     changeToCar() {
       this.newsName = '汽车';
+      this.newsList = [
+        {content: '让代步不再将就 奔奔E-Star国民版预售启动', url: 'https://auto.sina.com.cn/newcar/x/2020-12-30/detail-iiznezxs9816491.shtml'},
+        {content: '喜欢运动的年轻人看过来 这些2.0T中型轿车足够亮眼', url: 'https://auto.sina.com.cn/guide/2020-12-30/detail-iiznctke9211291.shtml?hpid=00011'},
+        {content: '欧尚X7上市一年便中期改款，这或许是你性价比极致之选', url: 'https://k.sina.com.cn/article_5083533502_12f0090be00100pwsp.html?from=auto&hpid=00012'},
+        {content: '马自达将推新款CX-5 中控屏尺寸增大', url: 'https://auto.sina.com.cn/newcar/zz/2020-12-30/detail-iiznctke9322831.shtml?oaid=00111'}
+      ]
     },
     changeToScience() {
       this.newsName = '科技';
+      this.newsList = [
+        {content: '肯尼亚第一大运营商暂停推出5G商用', url: 'https://finance.sina.com.cn/tech/2020-12-30/doc-iiznezxs9726622.shtml'},
+        {content: '筑牢新基建之“基”，5G对社会生活有哪些改变', url: 'https://finance.sina.com.cn/tech/2020-12-30/doc-iiznezxs9784915.shtml'},
+        {content: '微软正在修复Win10删除用户存储密码Bug', url: 'https://finance.sina.com.cn/tech/2020-12-30/doc-iiznezxs9753401.shtml'},
+        {content: '华为桌面一体机曝光：四种形态 超薄设计', url: 'https://finance.sina.com.cn/tech/2020-12-30/doc-iiznezxs9754028.shtml'}
+      ]
     },
     changeToArder() {
       this.newsName = '休闲';
+      this.newsList = [
+        {content: '缤纷豪礼增添新年色彩 《剑网3》邀你欢聚携手跨年', url: 'https://games.sina.com.cn/2020-12-30/detail-i-iiznctke9363724.shtml'},
+        {content: 'CSOL十二周年主题事件：来曙光城过战友节', url: 'https://games.sina.com.cn/2020-12-30/detail-i-iiznezxs9706472.shtml'},
+        {content: '新角色预约开启《艾尔之光》邀你进入月影之下', url: 'https://games.sina.com.cn/2020-12-30/detail-i-iiznctke9286328.shtml'},
+        {content: '《学园偶像季：群星闪耀》入门篇：成员剧场功能解析', url: 'https://games.sina.com.cn/2020-12-30/detail-i-iiznctke9285316.shtml'}
+      ]
     },
     changeToBeauty() {
       this.newsName = '美妆';
+      this.newsList = [
+        {content: '蔡依林吃了神马防腐剂 竟然跟20+时没有差别', url: 'https://fashion.sina.com.cn/b/sk/2020-12-25/2214/doc-iiznctke8012296.shtml'},
+        {content: '盘点那些“回炉重造”的护肤品牌', url: 'https://fashion.sina.com.cn/b/sk/2020-12-29/1858/doc-iiznctke9106626.shtml'},
+        {content: '编辑们重金囤货 冬季的“保命”面膜', url: 'https://fashion.sina.com.cn/b/sk/2020-12-30/1915/doc-iiznctke8014118.shtml'},
+        {content: '2020年度眼妆盘点 学会了能再美一年', url: 'https://fashion.sina.com.cn/b/mk/2020-12-29/1858/doc-iiznezxs9529319.shtml'}
+      ]
     },
     changeToArt() {
       this.newsName = '综艺';
+      this.newsList = [
+        {content: '王源跨年舞台彩排照曝光 一身运动装又唱又跳', url: 'http://slide.ent.sina.com.cn/z/v/slide_4_704_350530.html#p=1'},
+        {content: '《青春有你3》训练生制服细节曝光 共四款设计突出个性', url: 'http://slide.ent.sina.com.cn/z/v/slide_4_704_350518.html#p=1'},
+        {content: '张若昀节目中首谈女儿 现场示范换尿布父爱满满', url: 'https://ent.sina.com.cn/2020-12-30/doc-iiznezxs9751822.shtml'},
+        {content: '丁飞俊确认退出《创造营2021》 目前已离开酒店', url: 'https://ent.sina.com.cn/2020-12-30/doc-iiznctke9303577.shtml'}
+      ]
     },
     changeToThing() {
       this.newsName = '时事';
+      this.newsList = [
+        {content: '实时更新：新型冠状肺炎全国疫情地图', url: 'https://news.sina.cn/zt_d/yiqing0121'},
+        {content: '国务院联防联控机制：防控不力将追责', url: 'https://news.sina.com.cn/c/2020-12-30/doc-iiznezxs9753070.shtml'},
+        {content: '顺义聚集性疫情来源水落石出!', url: 'https://news.sina.com.cn/c/2020-12-30/doc-iiznezxs9783804.shtml'},
+        {content: '美计划出售驻港总领馆房产 外交部回应', url: 'https://news.sina.com.cn/c/2020-12-30/doc-iiznezxs9764304.shtml'}
+      ]
     },
     changeToBook() {
-      this.newsName = '小说';
+      this.newsName = '历史';
+      this.newsList = [
+        {content: '何其命硬——秦始皇一生的四次遇刺经历', url: 'http://blog.sina.com.cn/s/blog_5e6e0d820102z16s.html'},
+        {content: '19长平之战赵国离得近为何反不能持久战？', url: 'http://blog.sina.com.cn/s/blog_60008c090102ym7a.html'},
+        {content: '假如王弗还在，苏东坡会娶妾吗？', url: 'http://blog.sina.com.cn/s/blog_4865b35c0102zd8t.html'},
+        {content: '秦始皇的军队为什么如此之强？', url: 'http://blog.sina.com.cn/s/blog_5f6e83250102z9de.html'}
+      ]
     },
     changeToLife() {
-      this.newsName = '生活';
+      this.newsName = '旅游';
+      this.newsList = [
+        {content: '2021年铁路春运火车票12月30日开售', url: 'http://travel.sina.com.cn/domestic/news/2020-12-30/detail-iiznezxs9716024.shtml'},
+        {content: '泰国将2021年中国春节定为法定假日', url: 'http://travel.sina.com.cn/outbound/news/2020-12-30/detail-iiznezxs9726123.shtml'},
+        {content: '中国唯一穿汉服才能进的园林 游客打招呼以古语相称', url: 'http://travel.sina.com.cn/domestic/pages/2019-05-27/detail-ihvhiews4849111.shtml'},
+        {content: '西游记里的通天河 真正的万里长江第一湾', url: 'http://travel.sina.com.cn/domestic/pages/2019-05-27/detail-ihvhiqay1677468.shtml'}
+      ]
     },
     toNews(item) {
       this.$router.push({path: "/look", query: {title: item.title, content: item.content, picture: item.picture}});
